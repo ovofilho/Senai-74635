@@ -20,6 +20,7 @@ public class Poupanca extends Conta{
     }
 
    
+    @Override
     public void alteraStatus(int nrG, boolean status) {
         if(super.getIdGerente() == nrG){
             super.setStatus(status);
@@ -28,8 +29,10 @@ public class Poupanca extends Conta{
     }
 
  
+    @Override
     public void sacar(int id, Double valor) {
-        if(super.getIdCliente()==id){
+        if(super.getIdCliente()==id || super.getSaldo()>=valor || valor >0){
+            this.setSaldo(super.getSaldo()-valor);
             //pode sacar
         }
         else{
@@ -39,22 +42,13 @@ public class Poupanca extends Conta{
 
     @Override
     public void depositar(Double valor) {
+        if(valor >0) super.setSaldo(super.getSaldo() + valor);
         
     }
 
     @Override
     public void transferir(int nrBanco, int nrAgencia, int nrConta, Double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //implementar depois
     }
-
-    @Override
-    public void alteraStatus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void sacar(Double valor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+   
 }
