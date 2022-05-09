@@ -1,0 +1,57 @@
+create table
+		gerente (idgerente int not null auto_increment primary key,
+				  nome varchar(40) not null);
+                  
+create table 
+		cliente (idcliente int not null auto_increment primary key,
+					nome varchar(40) not null,
+                    cpf int not null);
+                    
+create table 
+contacorrente (idconta int not null auto_increment primary key,
+				idgerente int not null,
+                idcliente int not null,
+                numero int not null,
+                saldo double,
+                limiteTotal double not null default 0,
+                limiteUtilizado double not null  default 0,
+                tipo char not null default 's',
+                ativo boolean not null default true,
+                constraint fkgerenteconta
+                foreign key(idgerente) references gerente(idgerente),
+                constraint fkclienteconta
+                foreign key(idcliente) references cliente(idcliente)
+                );
+
+create table
+poupanca (idpoupanca int not null auto_increment primary key,
+				idgerente int not null,
+                idcliente int not null,
+                numero int not null,
+                saldo double,
+                ativo boolean not null default true,
+                dtrendimento date,
+                constraint fkgerentepoupanca
+                foreign key(idgerente) references gerente(idgerente),
+                constraint fkclientepoupanca
+                foreign key(idcliente) references cliente(idcliente)
+                );      
+create table
+			tipoconta (tipo varchar(1) not null primary key,
+						descricao varchar(40));
+create table
+			tipotransacao (tipo char not null primary key,
+						descricao varchar(40));    
+                       
+create table 
+			movimentacao (idmovimentacao int not null auto_increment primary key,
+						   idconta int not null,
+                           datamovimentacao date,
+                           tipoconta varchar(1) not null,
+                           valor double not null,
+                           tipotransacao varchar(1) not null,
+                           constraint fkidtipoconta
+                           foreign key(tipoconta) references tipoconta(tipo),
+                           constraint fkidtipotransacao
+                           foreign key(tipotransacao) references tipotransacao(tipo));
+                         
