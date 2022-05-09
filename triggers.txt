@@ -1,0 +1,27 @@
+after update on poupanca
+for each row 
+begin
+	if(new.saldo > old.saldo) then
+		insert into movimentacao (idconta, datamovimentacao, tipoconta, valor, tipotransacao) values
+		(old.idpoupanca, curdate(),1,new.saldo - old.saldo,2);
+	else
+		insert into movimentacao (idconta, datamovimentacao, tipoconta, valor, tipotransacao) values
+		(old.idpoupanca, curdate(),1,old.saldo - new.saldo,1);
+     end if;
+end$$
+delimiter ;
+
+
+create trigger tgmovimentacaoc
+after update on contacorrente
+for each row 
+begin
+	if(new.saldo > old.saldo) then
+		insert into movimentacao (idconta, datamovimentacao, tipoconta, valor, tipotransacao) values
+		(old.idconta, curdate(),2,new.saldo - old.saldo,2);
+	else
+		insert into movimentacao (idconta, datamovimentacao, tipoconta, valor, tipotransacao) values
+		(old.idconta, curdate(),2,old.saldo - new.saldo,1);
+     end if;
+end$$
+delimiter ;
